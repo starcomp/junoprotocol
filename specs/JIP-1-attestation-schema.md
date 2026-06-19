@@ -42,7 +42,12 @@ The registry's value (neutral, multi-writer, persistent, portable) collapses if 
 
 - **EAS (testnet/L2):** the fields above register as an EAS schema string; `parent_ref` uses native `refUID`; revocation uses native EAS revocation.
 - **Borsh/Anchor (mainnet-conditional):** the same field order serializes as a `#[repr]` leaf struct in a concurrent Merkle tree.
-- A **round-trip equivalence test MUST** prove that encode→decode across both representations is lossless and field-order-stable. CI **MUST** fail on drift between the deployed EAS schema and this document.
+- A **round-trip equivalence test MUST** prove that encode→decode across both representations is lossless and field-order-stable. CI **MUST** fail on drift between the deployed EAS schema and this document. The reference implementation lives in [`schema/`](../schema/) (`@juno-protocol/schema`), which is the authoritative encoding and prints the exact EAS schema string, Solidity decode tuple, and Borsh struct.
+
+### Encoding notes (normative)
+
+- **`parent_ref` is NOT part of the ABI/Borsh-encoded data.** It is realized as EAS's **native `refUID`** field on the `Attestation` struct (a Solana leaf pointer at mainnet), so it does **not** appear in the EAS schema string. It remains a logical field of the attestation, carried as attestation metadata.
+- **`sigRef` is excluded from the signed content hash.** Detectors sign `keccak256` of the ABI encoding of every canonical field **except `sigRef`** (you cannot sign bytes that contain the signature); the resolver recomputes that hash and verifies k-of-n. See `contentEncode()` in [`schema/src/eas.js`](../schema/src/eas.js).
 
 ### Design constraints (normative)
 

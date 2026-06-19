@@ -31,6 +31,7 @@ A blockchain is only justified here by four properties. Juno is honest that two 
 
 | Directory | Purpose | License |
 |---|---|---|
+| [`schema/`](schema/) | **Canonical attestation schema (JIP-1)** — single source of truth, with EAS + Borsh codecs and a test-verified round-trip equivalence. The foundation everything keys off. | Apache-2.0 |
 | [`contracts/`](contracts/) | Solidity + Foundry. EAS-based attestation registry wrappers + the economic-liability stack (staking, slashing, optimistic challenge, query payment, treasury, governance). | Apache-2.0 |
 | [`oracle-node/`](oracle-node/) | Detection oracle. Wraps the Google AI Content Detection API (SynthID) + C2PA verification, normalizes results, and signs attestations. | AGPL-3.0-or-later |
 | [`fingerprinting/`](fingerprinting/) | Content fingerprinting: `chash` (SHA-256) + per-modality perceptual/neural hashing + an approximate-nearest-neighbor (ANN) index service. | AGPL-3.0-or-later |

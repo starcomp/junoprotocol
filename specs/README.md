@@ -14,6 +14,9 @@ This directory holds the normative protocol specifications and the **Juno Improv
 | [`jip-template.md`](jip-template.md) | Authoring template | Living |
 | [`JIP-1-attestation-schema.md`](JIP-1-attestation-schema.md) | Canonical chain-portable attestation object | Draft |
 | [`JIP-2-fingerprint.md`](JIP-2-fingerprint.md) | Dual-fingerprint (`chash` + `phash`) specification | Draft |
+| [`JIP-3-audio-video-fingerprint.md`](JIP-3-audio-video-fingerprint.md) | Audio & video fingerprinting + temporal segment maps | Draft |
+
+> **Reference implementation:** [`JIP-1`](JIP-1-attestation-schema.md) is realized as an executable, test-verified artifact in [`schema/`](../schema/) — the canonical EAS schema string and a Borsh⇄EAS round-trip equivalence test.
 
 ## Conventions
 
