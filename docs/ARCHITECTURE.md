@@ -57,6 +57,10 @@ All the real work is off-chain: detection (oracle), fingerprinting + ANN, and th
 - **Testnet:** a single permissioned ECDSA attester behind an on-chain allowlist (architected for a set, shipped as n=1). No BLS, no rival-firm federation.
 - **Mainnet-conditional:** BLS threshold signatures and a real m-of-n federation — gated on **≥ 2 genuinely independent licensed detectors existing**, plus their legal sign-off. Until then, "m-of-n" would be *n copies of one Google API* (the correlated-failure risk).
 - **Liability is scoped** to detectable-disagreement faults (C2PA mismatch, reproducible detector-output mismatch), **not** the underlying "is this AI?" truth, which is not on-chain-verifiable.
+- **Claim-of-record, not truth-verdict.** An attestation records "attester A ran detector build V over content C and observed output O" — a reproducible fact the challenge market can re-run and dispute — never "this *is* AI." This is what gives the slashing market deterministic ground truth without an on-chain truth oracle.
+- **Multi-signal & detector-agnostic.** The oracle ingests heterogeneous, mostly ToS-clean signals — C2PA verification, open SynthID-Text, an owned classifier, platform disclosure — with any vendor's detection API a **pluggable, flag-gated** provider that is **never on the launch critical path**. A **graceful-degradation invariant** (CI-tested) guarantees the happy-path runs with the vendor class disabled, so no single vendor's terms or outage can halt the protocol.
+
+See [`specs/JIP-4-trust-model.md`](../specs/JIP-4-trust-model.md) for the normative trust model.
 
 ## Why a blockchain at all
 

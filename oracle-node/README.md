@@ -15,6 +15,12 @@ A stake-aware node that produces signed provenance attestations. It pulls a job,
 | `LabeledCorpusProvider` | **STUB (honest)** | Deterministic detector over a **real labeled corpus** we control (known-AI from Imagen/Gemini + known-real public sets). Default for image. Emits real verdicts on known data — never fabricated confidence. |
 | `GoogleContentDetectionProvider` | **CODE-COMPLETE, FLAG-GATED** | Adapter for Google's AI Content Detection API. Drops in zero-refactor **if and only if** partner access **and** ToS clearance land (see kill-gate #1 in [`ROADMAP.md`](../ROADMAP.md) §13). Off by default. |
 
+## Multi-signal & graceful degradation (normative — [JIP-4](../specs/JIP-4-trust-model.md))
+
+The provider chain is deliberately **detector-agnostic**. Launch-blocking, *slashable* signals **MUST** be ToS-clean and freely re-runnable (so a "reproducible detector-output mismatch" is a fault a challenger can actually prove): C2PA verification, open SynthID-Text, the owned classifier. `GoogleContentDetectionProvider` and any other vendor API are **pluggable, off by default, and never on the launch critical path** — their outputs are explicitly **non-slashable, attributed advisory** records (a third party re-running a vendor API to police a claim could itself breach that vendor's terms).
+
+**Graceful-degradation invariant:** the full happy-path (fingerprint → attest → record → read → challenge) **MUST** run with the vendor-API class disabled. CI **MUST** include a "vendor-disabled" end-to-end run; a build that breaks when the vendor class is off **MUST** fail. A hostile ToS change or outage then degrades one class's coverage — it never halts the protocol.
+
 ## Honesty guarantees
 
 Every stub/mock attestation carries an unforgeable `provenance=mock` field, is signed with a **non-staked test key**, and is **excluded from every reward/slash path**. The product surface renders `provenance=mock` distinctly so a stub can never be mistaken for a real verdict.

@@ -51,6 +51,7 @@ The registry's value (neutral, multi-writer, persistent, portable) collapses if 
 
 ### Design constraints (normative)
 
+- An attestation is a **claim of record**, not a truth-verdict: it records that an attester ran detector build `detector_version` (or verified a C2PA manifest) over `chash` and observed this `verdict`/`confidence`. The slashable fault is a **reproducible detector-output mismatch**, never "the verdict was wrong about reality." Renderers **MUST** present it as a sourced, dated claim. See [JIP-4](JIP-4-trust-model.md).
 - `phash` is **advisory**. A `phash_commit`/`lsh_bucket` match **MUST NOT** auto-mint a verdict, auto-mutate an existing attestation, or trigger a slash. It surfaces a *labeled prior claim* only.
 - Person-linkable perceptual data **MUST NOT** be written to any immutable anchor (e.g. Bitcoin). Only `chash`/Merkle roots with no person-linkable perceptual data may be anchored (see [`ROADMAP.md`](../ROADMAP.md) §9.4, GDPR).
 
