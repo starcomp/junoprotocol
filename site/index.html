@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Juno Protocol — a neutral registry of record for AI-content provenance</title>
+<meta name="description" content="Juno is a neutral, economically-liable on-chain registry of record for AI-content provenance (built on SynthID + C2PA) — so anyone can tell real media from AI-generated, and no single company owns the answer. Pre-alpha, open source." />
+<meta name="theme-color" content="#0a0b12" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<meta name="color-scheme" content="dark" />
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Juno Protocol — a neutral registry of record for AI-content provenance" />
+<meta property="og:description" content="Tell real media from AI — with a record you can point to. Open source, economically-liable, no single company owns it. Pre-alpha." />
+<meta property="og:url" content="https://starcomp.github.io/junoprotocol/" />
+<!-- TODO: add og:image (1200x630 PNG) before publishing -->
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+  :root{
+    --bg:#0a0b12; --bg-2:#0e1018; --elev:#13151f; --card:#14162100;
+    --text:#e8eaf4; --muted:#9aa0b8; --faint:#6b7088;
+    --accent:#8b7bff; --accent-2:#3ec9c0; --warn:#f5b34a; --good:#46d39a;
+    --border:rgba(255,255,255,.09); --border-2:rgba(255,255,255,.14);
+    --radius:16px; --maxw:1120px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+    line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1,h2,h3{line-height:1.15;letter-spacing:-.02em;margin:0 0 .4em}
+  h2{font-size:clamp(1.6rem,3.2vw,2.3rem)}
+  h3{font-size:1.18rem;letter-spacing:-.01em}
+  p{margin:0 0 1rem}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  .skip{position:absolute;left:-999px;top:0;background:var(--accent);color:#0a0b12;padding:10px 16px;border-radius:8px;z-index:100}
+  .skip:focus{left:12px;top:12px}
+
+  /* nav */
+  header.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);
+    background:rgba(10,11,18,.72);border-bottom:1px solid var(--border)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:62px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;color:var(--text)}
+  .brand:hover{text-decoration:none}
+  .brand svg{width:28px;height:28px;border-radius:8px;display:block}
+  .nav-links{margin-left:auto;display:flex;align-items:center;gap:26px}
+  .nav-links a{color:var(--muted);font-size:.94rem;font-weight:500}
+  .nav-links a:hover{color:var(--text);text-decoration:none}
+  .nav-cta{display:inline-flex;align-items:center;gap:7px;padding:8px 15px;border:1px solid var(--border-2);
+    border-radius:10px;color:var(--text)!important;font-weight:600;font-size:.9rem}
+  .nav-cta:hover{border-color:var(--accent);background:rgba(139,123,255,.1);text-decoration:none}
+  .menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--border-2);color:var(--text);
+    border-radius:9px;padding:8px 10px;cursor:pointer;font-size:1rem}
+  @media(max-width:820px){
+    .nav-links{position:fixed;inset:62px 0 auto 0;flex-direction:column;gap:0;background:var(--bg-2);
+      border-bottom:1px solid var(--border);padding:8px 22px 18px;display:none}
+    .nav-links.open{display:flex}
+    .nav-links a{width:100%;padding:11px 0;border-bottom:1px solid var(--border);font-size:1rem}
+    .nav-cta{margin-top:10px;justify-content:center}
+    .menu-btn{display:inline-block}
+  }
+
+  /* hero */
+  .hero{position:relative;padding:84px 0 64px;text-align:center;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:-30% 0 auto;height:560px;z-index:-1;
+    background:radial-gradient(60% 70% at 50% 0%,rgba(139,123,255,.22),transparent 70%),
+               radial-gradient(40% 50% at 80% 10%,rgba(62,201,192,.14),transparent 70%)}
+  .pill{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;letter-spacing:.02em;
+    color:var(--warn);background:rgba(245,179,74,.1);border:1px solid rgba(245,179,74,.32);
+    padding:6px 13px;border-radius:999px;margin-bottom:22px}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--warn);box-shadow:0 0 0 4px rgba(245,179,74,.18)}
+  .hero h1{font-size:clamp(2.3rem,6vw,4rem);font-weight:800;margin-bottom:.3em}
+  .hero h1 .grad{background:linear-gradient(100deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--muted);max-width:720px;margin:0 auto 28px}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:12px;font-weight:650;font-size:1rem;border:1px solid transparent;cursor:pointer}
+  .btn-primary{background:linear-gradient(100deg,var(--accent),#6f5bff);color:#fff}
+  .btn-primary:hover{text-decoration:none;filter:brightness(1.08);transform:translateY(-1px)}
+  .btn-ghost{border-color:var(--border-2);color:var(--text)}
+  .btn-ghost:hover{text-decoration:none;border-color:var(--accent);background:rgba(139,123,255,.08)}
+  .btn{transition:transform .15s ease,filter .15s ease,border-color .15s ease,background .15s ease}
+  .micro{color:var(--faint);font-size:.86rem}
+  .micro strong{color:var(--muted);font-weight:600}
+
+  /* sections */
+  section{padding:62px 0;border-top:1px solid var(--border)}
+  .eyebrow{font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .section-lead{color:var(--muted);max-width:760px;font-size:1.05rem}
+
+  .grid{display:grid;gap:18px;margin-top:34px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+    border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+  .card h3{margin-bottom:.35em}
+  .card p{color:var(--muted);font-size:.96rem;margin:0}
+  .tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    padding:3px 9px;border-radius:999px;margin-bottom:12px}
+  .tag.strong{color:var(--good);background:rgba(70,211,154,.12);border:1px solid rgba(70,211,154,.3)}
+  .tag.cond{color:var(--warn);background:rgba(245,179,74,.1);border:1px solid rgba(245,179,74,.28)}
+  .num{font-family:var(--mono);font-size:.8rem;color:var(--accent);border:1px solid var(--border-2);
+    width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px}
+
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:start}
+  @media(max-width:840px){.split{grid-template-columns:1fr;gap:26px}}
+  ul.clean{list-style:none;margin:0;padding:0}
+  ul.clean li{position:relative;padding:8px 0 8px 26px;color:var(--muted);border-bottom:1px solid var(--border)}
+  ul.clean li:last-child{border-bottom:0}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:15px;width:9px;height:9px;border-radius:50%;
+    background:var(--accent-2);box-shadow:0 0 0 4px rgba(62,201,192,.14)}
+  ul.clean li strong{color:var(--text);font-weight:650}
+
+  pre{background:#0c0e16;border:1px solid var(--border);border-radius:12px;padding:16px;overflow:auto;
+    font-family:var(--mono);font-size:.82rem;line-height:1.6;color:#cfd3e6}
+  pre .c{color:var(--accent-2)}
+  pre .k{color:var(--accent)}
+  code.inline{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.06);
+    border:1px solid var(--border);border-radius:6px;padding:1px 6px}
+
+  .killgate{display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:var(--radius);
+    border:1px solid rgba(245,179,74,.26);background:rgba(245,179,74,.05)}
+  .killgate .kg-n{flex:0 0 auto;font-family:var(--mono);font-weight:700;color:var(--warn);
+    border:1px solid rgba(245,179,74,.4);border-radius:9px;width:38px;height:38px;display:flex;align-items:center;justify-content:center}
+  .killgate h3{font-size:1.05rem;margin-bottom:.25em}
+  .killgate p{color:var(--muted);font-size:.95rem;margin:0}
+
+  .phase{padding:18px 20px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.018)}
+  .phase .ph{font-family:var(--mono);font-size:.78rem;color:var(--accent);font-weight:700;letter-spacing:.04em}
+  .phase h3{font-size:1.02rem;margin:.3em 0 .3em}
+  .phase p{color:var(--muted);font-size:.92rem;margin:0}
+
+  .lic{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .lic span{font-family:var(--mono);font-size:.78rem;color:var(--muted);border:1px solid var(--border);
+    border-radius:8px;padding:6px 11px}
+  .lic span b{color:var(--text)}
+
+  .note{background:rgba(139,123,255,.06);border:1px solid rgba(139,123,255,.22);border-radius:12px;
+    padding:14px 18px;color:var(--muted);font-size:.92rem}
+  .note strong{color:var(--text)}
+
+  footer{border-top:1px solid var(--border);padding:46px 0 60px;color:var(--faint);font-size:.88rem}
+  .foot-grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:26px}
+  .foot-grid a{color:var(--muted)}
+  .foot-col h4{color:var(--text);font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px}
+  .foot-col a{display:block;padding:4px 0}
+  .disclaimer{border-top:1px solid var(--border);padding-top:22px;line-height:1.7;max-width:880px}
+  .disclaimer em{color:var(--muted);font-style:normal}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="Juno Protocol home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b7bff"/><stop offset="1" stop-color="#3ec9c0"/></linearGradient></defs><rect x="1" y="1" width="30" height="30" rx="8" fill="url(#lg)"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="#0a0b12" stroke-width="2.2" opacity=".92"/><path d="M12 16.4l2.9 2.9L21 12" fill="none" stroke="#0a0b12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Juno&nbsp;Protocol
+    </a>
+    <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <nav class="nav-links" id="navlinks">
+      <a href="#thesis">Thesis</a>
+      <a href="#how">How it works</a>
+      <a href="#honesty">Kill-gates</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#build">Developers</a>
+      <a class="nav-cta" href="https://github.com/starcomp/junoprotocol" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- HERO -->
+<section class="hero" style="border-top:0">
+  <div class="wrap">
+    <span class="pill"><span class="dot"></span> Pre-alpha · unaudited · no token</span>
+    <h1>Is it real, <span class="grad">or AI?</span></h1>
+    <p class="lead">Juno is a neutral, economically-liable <strong style="color:var(--text)">registry of record</strong> for AI-content provenance — so anyone can check whether media is AI-generated, and <em>no single company owns the answer.</em></p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/starcomp/junoprotocol" target="_blank" rel="noopener">View on GitHub ↗</a>
+      <a class="btn btn-ghost" href="https://github.com/starcomp/junoprotocol/blob/main/ROADMAP.md" target="_blank" rel="noopener">Read the Roadmap</a>
+      <a class="btn btn-ghost" href="#how">How it works</a>
+    </div>
+    <p class="micro"><strong>Not an AI detector.</strong> Reads are free. Built on Google SynthID + C2PA — not affiliated with Google.</p>
+  </div>
+</section>
+
+<!-- WHAT IT IS -->
+<section id="thesis">
+  <div class="wrap">
+    <div class="eyebrow">What Juno is — and isn't</div>
+    <h2>The one thing the platforms won't build</h2>
+    <p class="section-lead">Google (SynthID), Meta, and OpenAI are shipping free, native “is this AI?” detection into search and browsers. Out-detecting them is a losing game. Juno owns the durable niche they <em>structurally</em> will not: a neutral, cross-vendor, economically-liable record with <strong style="color:var(--text)">persistent memory</strong> — one that remembers a piece of media was attested as AI <em>even after the watermark or credential is stripped.</em></p>
+
+    <div class="grid g4">
+      <div class="card">
+        <span class="tag strong">Strong</span>
+        <h3>Neutral registry</h3>
+        <p>A multi-writer record of provenance attestations that no single AI firm owns or can censor. No competitor will host a registry for its rivals — a neutral protocol can.</p>
+      </div>
+      <div class="card">
+        <span class="tag cond">Conditional</span>
+        <h3>Persistent memory</h3>
+        <p>Keyed by perceptual hash, it surfaces a prior attestation for incidentally-degraded near-duplicates — a <em>labeled prior claim</em>, never a fresh re-detection, and never auto-applied.</p>
+      </div>
+      <div class="card">
+        <span class="tag strong">Strong · scoped</span>
+        <h3>Economic liability</h3>
+        <p>Attesters post stake; provably-wrong attestations are slashable via an optimistic challenge market. Liability covers detectable disagreement — not the underlying truth.</p>
+      </div>
+      <div class="card">
+        <span class="tag cond">Conditional</span>
+        <h3>Bootstrap incentives</h3>
+        <p>Emissions can subsidize coverage of the long tail. If that doesn’t validate, Juno ships with stablecoin collateral and <em>no native token.</em></p>
+      </div>
+    </div>
+    <p class="micro" style="margin-top:22px">Two of these four are genuinely chain-justified; two are conditional. <strong>We say so openly</strong> — that candor is the asset.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="wrap">
+    <div class="eyebrow">How it works</div>
+    <h2>Fingerprint → attest → record → read → challenge</h2>
+    <p class="section-lead">The chain stores signed verdicts and stake. <strong style="color:var(--text)">The chain never runs detection</strong> — correctness is enforced after the fact by the economic-liability layer.</p>
+
+    <div class="grid g3">
+      <div class="card"><span class="num">1</span><h3>Fingerprint</h3><p>Media is hashed <em>client-side</em>: <code class="inline">chash</code> (SHA-256, exact) + <code class="inline">phash</code> (perceptual, near-duplicate). Raw media never leaves the device.</p></div>
+      <div class="card"><span class="num">2</span><h3>Attest</h3><p>A staked detection oracle runs Google SynthID + C2PA verification off-chain and signs a verdict into the canonical attestation.</p></div>
+      <div class="card"><span class="num">3</span><h3>Record</h3><p>Written to the registry (Ethereum Attestation Service on an L2). The chain enforces <code class="inline">chash</code> dedup, staked-writer gating, and near-dup linkage.</p></div>
+      <div class="card"><span class="num">4</span><h3>Read — free</h3><p>Integrators query by fingerprint and get back the verdict, confidence, model lineage, and challenge status. Reads cost nothing.</p></div>
+      <div class="card"><span class="num">5</span><h3>Challenge</h3><p>Anyone can dispute a wrong attestation within a window. Resolution slashes the loser’s stake and revokes the attestation.</p></div>
+      <div class="card" style="border-style:dashed"><span class="num">$</span><h3>Who pays?</h3><p>Only <em>fresh detection</em> is paid — in stablecoin, by liability-bearing buyers (marketplaces, ad-verification, insurers) who need a neutral record they can cite.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE / BUILD -->
+<section id="build">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <div class="eyebrow">Built in the open</div>
+        <h2>A real foundation, not a whitepaper</h2>
+        <p class="section-lead">The canonical attestation schema (JIP-1) is an executable, test-verified artifact: one source of truth deriving the EAS schema string, the Solidity decode tuple, and a Borsh struct — with a round-trip equivalence test.</p>
+        <ul class="clean">
+          <li><strong>Testnet:</strong> Base Sepolia + EAS, a single permissioned ECDSA attester. No BLS, no rival-firm federation in the MVP.</li>
+          <li><strong>Mainnet:</strong> default stays on the L2; Solana state-compression is conditional on a capacity model.</li>
+          <li><strong>Contracts:</strong> <code class="inline">JunoAttestationModule</code> (chash dedup + staked-writer gating) + <code class="inline">StakingManager</code>, with invariant tests.</li>
+          <li><strong>Specs:</strong> versioned Juno Improvement Proposals (JIPs) — schema, dual-fingerprint, audio/video.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="micro" style="margin-bottom:8px">The canonical EAS schema string · round-trip test: <strong style="color:var(--good)">8/8 passing</strong></p>
+<pre><span class="c">// @juno-protocol/schema — JIP-1</span>
+<span class="k">uint8</span>  schemaVersion,
+<span class="k">bytes32</span> chash,        <span class="c">// exact key</span>
+<span class="k">bytes32</span> phashCommit,  <span class="c">// near-dup</span>
+<span class="k">bytes</span>   lshBucket,
+<span class="k">uint8</span>   verdict,      <span class="c">// not|wm|?</span>
+<span class="k">uint16</span>  confidence,
+<span class="k">uint16</span>  modelLineage,
+<span class="k">uint16</span>  detectorVersion,
+<span class="k">bytes32</span> c2paManifestHash,
+<span class="k">bytes32</span> segmentMapHash,
+<span class="k">uint32</span>  attesterSetId,
+<span class="k">bytes</span>   sigRef,
+<span class="k">uint64</span>  timestamp,
+<span class="k">uint8</span>   provenance</pre>
+        <p class="micro" style="margin-top:10px">EAS ⇄ Borsh codecs verified byte-for-byte against <code class="inline">ethers</code>. <a href="https://github.com/starcomp/junoprotocol/tree/main/schema" target="_blank" rel="noopener">See schema/ ↗</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HONESTY / KILL-GATES -->
+<section id="honesty">
+  <div class="wrap">
+    <div class="eyebrow">We lead with our weak points</div>
+    <h2>Three kill-gates</h2>
+    <p class="section-lead">Before any token or mainnet spend, three questions must be answered. If any fails, Juno pivots to a stablecoin consortium registry — or stops. This is in the roadmap, not buried.</p>
+
+    <div class="grid" style="margin-top:30px;gap:16px">
+      <div class="killgate"><div class="kg-n">1</div><div><h3>Does Google’s API even permit this?</h3><p>The SynthID / Content-Detection-API terms may forbid on-chain re-attestation, paid relay, or federation. A binary, potentially fatal, currently-unconfirmed legal question — diligence item #1.</p></div></div>
+      <div class="killgate"><div class="kg-n">2</div><div><h3>Will anyone actually pay?</h3><p>≥3 signed paid-pilot LOIs from liability-bearing buyers who can’t get the same data free from Google/C2PA — required <em>before</em> any token or mainnet spend.</p></div></div>
+      <div class="killgate"><div class="kg-n">3</div><div><h3>Is the matching precise enough?</h3><p>A published perceptual-hash precision number against a ≥1M hard-negative haystack. A false “AI” label is a defamation risk, so persistence ships only if precision clears.</p></div></div>
+    </div>
+    <div class="note" style="margin-top:24px"><strong>The biggest systemic risk we name out loud:</strong> correlated detector failure. Until a genuinely independent second licensed detector exists, “m-of-n” is just n copies of one Google API — and a unanimous-wrong federation is unslashable. That’s why real federation is gated, not assumed.</div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="wrap">
+    <div class="eyebrow">Where it’s going</div>
+    <h2>Criteria-gated, not calendar-driven</h2>
+    <div class="grid g4" style="margin-top:30px">
+      <div class="phase"><span class="ph">PHASE A</span><h3>Testnet MVP</h3><p>Single oracle on Base Sepolia + EAS, image + text. Graduates on the precision gate, a scoped audit, and a ≥4-week attack-net.</p></div>
+      <div class="phase"><span class="ph">PHASE B</span><h3>Guarded mainnet</h3><p>L2 deployment, real token only if the kill-gates clear. Graduates on ≥3 paying integrators + HSM custody + a funded bounty.</p></div>
+      <div class="phase"><span class="ph">PHASE C</span><h3>Real federation</h3><p>BLS m-of-n, gated on ≥2 genuinely independent licensed detectors and antitrust sign-off.</p></div>
+      <div class="phase"><span class="ph">PHASE D</span><h3>Decentralization</h3><p>On-chain governance, token DVM, reputation-gated voting. Solana only if a capacity model justifies it.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN SOURCE -->
+<section id="opensource">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <div class="eyebrow">Open source</div>
+        <h2>Built in public, governed in two tracks</h2>
+        <p class="section-lead">Code authority (a Technical Steering Committee) is deliberately separate from on-chain protocol governance (the DAO). Standards evolve as Juno Improvement Proposals. Contributions welcome.</p>
+        <div class="lic">
+          <span><b>Apache-2.0</b> · contracts, SDK, schema</span>
+          <span><b>AGPL-3.0</b> · network services</span>
+          <span><b>CC-BY-4.0</b> · specs &amp; docs</span>
+        </div>
+      </div>
+      <div>
+        <ul class="clean">
+          <li><a href="https://github.com/starcomp/junoprotocol/blob/main/ROADMAP.md" target="_blank" rel="noopener"><strong>Roadmap</strong></a> — the full plan and kill-gates</li>
+          <li><a href="https://github.com/starcomp/junoprotocol/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noopener"><strong>Architecture</strong></a> — how the pieces fit</li>
+          <li><a href="https://github.com/starcomp/junoprotocol/blob/main/docs/THREAT_MODEL.md" target="_blank" rel="noopener"><strong>Threat model</strong></a> — attacks &amp; mitigations</li>
+          <li><a href="https://github.com/starcomp/junoprotocol/tree/main/specs" target="_blank" rel="noopener"><strong>Specifications (JIPs)</strong></a> — the protocol standards</li>
+          <li><a href="https://github.com/starcomp/junoprotocol/blob/main/docs/FAQ.md" target="_blank" rel="noopener"><strong>FAQ</strong></a> — the hard questions, answered</li>
+          <li><a href="https://github.com/starcomp/junoprotocol/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener"><strong>Contributing</strong></a> — get involved</li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a class="btn btn-primary" href="https://github.com/starcomp/junoprotocol" target="_blank" rel="noopener">Explore the repository ↗</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col" style="max-width:280px">
+        <a class="brand" href="#top" style="margin-bottom:12px"><svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true" style="border-radius:7px"><rect x="1" y="1" width="30" height="30" rx="8" fill="url(#lg)"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="#0a0b12" stroke-width="2.2" opacity=".92"/><path d="M12 16.4l2.9 2.9L21 12" fill="none" stroke="#0a0b12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Juno Protocol</a>
+        <p style="color:var(--faint)">A neutral, open-source registry of record for AI-content provenance.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Project</h4>
+        <a href="#thesis">Thesis</a>
+        <a href="#how">How it works</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#honesty">Kill-gates</a>
+      </div>
+      <div class="foot-col">
+        <h4>Build</h4>
+        <a href="https://github.com/starcomp/junoprotocol" target="_blank" rel="noopener">Repository ↗</a>
+        <a href="https://github.com/starcomp/junoprotocol/tree/main/schema" target="_blank" rel="noopener">Schema ↗</a>
+        <a href="https://github.com/starcomp/junoprotocol/tree/main/specs" target="_blank" rel="noopener">Specs (JIPs) ↗</a>
+        <a href="https://github.com/starcomp/junoprotocol/blob/main/SECURITY.md" target="_blank" rel="noopener">Security ↗</a>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <p><em><strong>Status:</strong> pre-alpha. Nothing here is audited. There is no token and no live network. Do not use in production.</em></p>
+      <p><em><strong>No affiliation with Google/Alphabet.</strong> Juno is not affiliated with, sponsored by, or endorsed by Google, Alphabet, Adobe, or the C2PA / Content Authenticity Initiative. “SynthID” and “C2PA” / “Content Credentials” are the property of their respective owners and are used here nominatively, solely to describe the third-party tools Juno oracles run, strictly under those tools’ own terms of service.</em></p>
+      <p style="margin-top:14px;color:var(--faint)">© <span id="yr">2026</span> Juno Protocol contributors · Apache-2.0 / AGPL-3.0 / CC-BY-4.0 · Built in the open.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle (progressive enhancement; page works without JS)
+  (function(){
+    var btn=document.querySelector('.menu-btn'),links=document.getElementById('navlinks');
+    if(btn&&links){
+      btn.addEventListener('click',function(){
+        var open=links.classList.toggle('open');
+        btn.setAttribute('aria-expanded',open?'true':'false');
+      });
+      links.addEventListener('click',function(e){
+        if(e.target.tagName==='A'){links.classList.remove('open');btn.setAttribute('aria-expanded','false');}
+      });
+    }
+    var yr=document.getElementById('yr'); if(yr){yr.textContent=new Date().getFullYear();}
+  })();
+</script>
+</body>
+</html>

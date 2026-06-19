@@ -40,6 +40,7 @@ A blockchain is only justified here by four properties. Juno is honest that two 
 | [`extension/`](extension/) | Reference "Is this AI?" browser extension / widget. | Apache-2.0 |
 | [`specs/`](specs/) | Protocol specifications and the Juno Improvement Proposal (JIP) process, including the canonical attestation schema. | CC-BY-4.0 |
 | [`docs/`](docs/) | Architecture, threat model, and FAQ. | CC-BY-4.0 |
+| [`site/`](site/) | Self-contained static landing page for GitHub Pages (no build step, no dependencies). | CC-BY-4.0 / Apache-2.0 |
 
 See [`LICENSING.md`](LICENSING.md) for the full per-component licensing policy and rationale.
 
