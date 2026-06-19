@@ -1,0 +1,8 @@
+# OPTIONAL dependencies — needed only to run the S1 harness over REAL images
+# (fingerprinting/scripts/). The pure core (juno_fp/hashing.py, match.py, eval.py)
+# and the smoke test (tests/test_smoke.py) require NONE of these and run on a
+# stock python3.
+Pillow>=10.0                 # image decode / transform matrix / grayscale for pHash
+numpy>=1.24                  # used by the OpenCV RANSAC path
+opencv-python-headless>=4.8  # ORB keypoints + RANSAC geometric verification (the
+                             # uncorrelated precision lever, JIP-2)
