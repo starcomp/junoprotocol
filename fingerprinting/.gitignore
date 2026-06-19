@@ -1,0 +1,6 @@
+# Generated S1 run outputs (real runs). The committed illustrative demo report
+# lives in examples/ and is force-added.
+/s1_report.*
+/corpus/
+__pycache__/
+*.pyc

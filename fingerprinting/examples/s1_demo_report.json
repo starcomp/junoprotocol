@@ -1,0 +1,85 @@
+{
+  "trials": 61,
+  "positives": 48,
+  "thresholds": {
+    "phash_strict": 6,
+    "phash_loose": 12,
+    "geom_min_inliers": 15,
+    "geom_min_inlier_ratio": 0.25,
+    "synthetic": true
+  },
+  "per_tier": {
+    "A": {
+      "tp": 8,
+      "fp": 0,
+      "precision": 1.0,
+      "recall_at_or_better": 0.16666666666666666
+    },
+    "A+": {
+      "tp": 17,
+      "fp": 0,
+      "precision": 1.0,
+      "recall_at_or_better": 0.5208333333333334
+    },
+    "B": {
+      "tp": 4,
+      "fp": 0,
+      "precision": 1.0,
+      "recall_at_or_better": 0.6041666666666666
+    }
+  },
+  "per_cluster": {
+    "blobs": {
+      "A": 1.0,
+      "A+": 1.0,
+      "B": 1.0
+    },
+    "confusable": {
+      "A": null,
+      "A+": null,
+      "B": null
+    },
+    "distinct": {
+      "A": null,
+      "A+": null,
+      "B": null
+    },
+    "grad_diag": {
+      "A": 1.0,
+      "A+": 1.0,
+      "B": null
+    },
+    "grad_h": {
+      "A": 1.0,
+      "A+": 1.0,
+      "B": null
+    },
+    "grad_v": {
+      "A": 1.0,
+      "A+": 1.0,
+      "B": null
+    },
+    "radial": {
+      "A": 1.0,
+      "A+": 1.0,
+      "B": 1.0
+    },
+    "sine": {
+      "A": 1.0,
+      "A+": 1.0,
+      "B": 1.0
+    }
+  },
+  "per_split": {
+    "clean": {
+      "A": 1.0,
+      "A+": 1.0,
+      "B": 1.0
+    },
+    "current": {
+      "A": 1.0,
+      "A+": 1.0,
+      "B": 1.0
+    }
+  }
+}

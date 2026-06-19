@@ -50,6 +50,10 @@ Run:
 # core logic — no dependencies
 python3 fingerprinting/tests/test_smoke.py
 
+# illustrative end-to-end run on a SYNTHETIC corpus — no dependencies, NOT publishable
+python3 fingerprinting/scripts/demo_synthetic.py --out fingerprinting/examples/s1_demo_report
+#   → see fingerprinting/examples/s1_demo_report.md for the report shape
+
 # real eval (needs requirements.txt + your own corpus)
 pip install -r fingerprinting/requirements.txt
 python3 fingerprinting/scripts/build_corpus.py --originals <dir> --negatives <dir> --out corpus/
