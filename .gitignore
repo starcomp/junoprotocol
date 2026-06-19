@@ -1,0 +1,71 @@
+# ── Workflow / design artifacts ────────────────────────────────
+.synthesis/
+
+# ── Node / TypeScript ──────────────────────────────────────────
+node_modules/
+dist/
+build/
+out/
+coverage/
+.turbo/
+*.tsbuildinfo
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+.npm/
+
+# ── Solidity / Foundry / Hardhat ───────────────────────────────
+cache/
+cache_forge/
+artifacts/
+typechain-types/
+broadcast/
+!broadcast/**/dry-run/
+lcov.info
+deployments/local/
+
+# ── Rust / Anchor (mainnet-conditional) ────────────────────────
+target/
+Cargo.lock
+.anchor/
+test-ledger/
+
+# ── Python ─────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# ── Secrets & local config (NEVER COMMIT) ──────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+keystore/
+wallet.json
+
+# ── Data / models / indexes (large, regenerable) ───────────────
+*.sqlite
+*.db
+data/
+haystack/
+*.faiss
+*.index
+models/
+
+# ── Editor / OS ────────────────────────────────────────────────
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.shared.json
+*.log

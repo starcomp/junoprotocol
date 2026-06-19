@@ -1,0 +1,70 @@
+name: CI
+
+# STUB / PLANNED — this is a scaffold. Jobs are wired to no-op placeholders until each
+# package lands real code. Each job activates when its path filter starts matching real sources.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dco:
+    name: DCO sign-off
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Verify Signed-off-by on all commits
+        run: |
+          echo "PLANNED: enforce 'Signed-off-by' (DCO) on every commit in the PR range."
+          # git log --format='%(trailers:key=Signed-off-by,valueonly)' origin/main..HEAD ...
+
+  contracts:
+    name: contracts (Foundry)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # - uses: foundry-rs/foundry-toolchain@v1
+      - name: build / test / invariants / gas-snapshot
+        run: echo "PLANNED: forge build && forge test && forge snapshot --check (pinned solc for reproducible bytecode)"
+      - name: static analysis
+        run: echo "PLANNED: slither . && semgrep --config p/solidity"
+      - name: schema drift check
+        run: echo "PLANNED: assert deployed EAS schema == canonical specs/JIP-1 (fail on drift)"
+
+  sdk:
+    name: sdk (TS + Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: typescript
+        run: echo "PLANNED: pnpm install && pnpm -r lint && pnpm -r typecheck && pnpm -r test"
+      - name: python
+        run: echo "PLANNED: ruff check && pytest"
+
+  services:
+    name: oracle-node / fingerprinting / indexer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: lint + test
+        run: echo "PLANNED: ruff/eslint + unit tests"
+      - name: adversarial fingerprint suite
+        run: echo "PLANNED: run crop/recompress/rotate/noise/strip suite; report recall vs benign-transform set"
+
+  docs-and-specs:
+    name: docs + specs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: markdown lint + link check
+        run: echo "PLANNED: markdownlint + lychee link checker across docs/ and specs/"
