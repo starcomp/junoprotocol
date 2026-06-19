@@ -1,0 +1,19 @@
+{
+  "name": "@juno-protocol/schema",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Canonical Juno attestation schema — single source of truth, with EAS (ABI) and Borsh codecs and a round-trip equivalence test (JIP-1).",
+  "license": "Apache-2.0",
+  "main": "src/canonical.js",
+  "scripts": {
+    "test": "node test/roundtrip.test.js",
+    "print-schema": "node scripts/print-schema.js"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "devDependencies": {
+    "ethers": "^5.7.2"
+  },
+  "comment": "The round-trip test is dependency-free and runs on any Node >=12. `ethers` is an OPTIONAL devDependency used only for an extra faithfulness cross-check (our hand-written ABI coder vs ethers' defaultAbiCoder); if it is not installed, that one assertion is skipped and the rest of the suite still runs."
+}
