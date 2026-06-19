@@ -193,7 +193,7 @@
       <a class="btn btn-ghost" href="https://github.com/starcomp/junoprotocol/blob/main/ROADMAP.md" target="_blank" rel="noopener">Read the Roadmap</a>
       <a class="btn btn-ghost" href="#how">How it works</a>
     </div>
-    <p class="micro"><strong>Not an AI detector.</strong> Reads are free. Built on Google SynthID + C2PA — not affiliated with Google.</p>
+    <p class="micro"><strong>Not an AI detector.</strong> Reads are free. Vendor-neutral — C2PA + open SynthID-Text and more; no single provider is load-bearing. Not affiliated with Google.</p>
   </div>
 </section>
 
@@ -202,7 +202,7 @@
   <div class="wrap">
     <div class="eyebrow">What Juno is — and isn't</div>
     <h2>The one thing the platforms won't build</h2>
-    <p class="section-lead">Google (SynthID), Meta, and OpenAI are shipping free, native “is this AI?” detection into search and browsers. Out-detecting them is a losing game. Juno owns the durable niche they <em>structurally</em> will not: a neutral, cross-vendor, economically-liable record with <strong style="color:var(--text)">persistent memory</strong> — one that remembers a piece of media was attested as AI <em>even after the watermark or credential is stripped.</em></p>
+    <p class="section-lead">Google (SynthID), Meta, and OpenAI are shipping free, native “is this AI?” detection into search and browsers. Out-detecting them is a losing game. Juno owns the durable niche they <em>structurally</em> will not: a neutral, cross-vendor, economically-liable record with <strong style="color:var(--text)">persistent memory</strong> — one that remembers a piece of media was attested as AI <em>even after the watermark or credential is stripped.</em> It ingests many independent signals — C2PA Content Credentials, open SynthID-Text, watermark detectors, platform disclosures — so no single vendor's model or terms is load-bearing.</p>
 
     <div class="grid g4">
       <div class="card">
@@ -239,7 +239,7 @@
 
     <div class="grid g3">
       <div class="card"><span class="num">1</span><h3>Fingerprint</h3><p>Media is hashed <em>client-side</em>: <code class="inline">chash</code> (SHA-256, exact) + <code class="inline">phash</code> (perceptual, near-duplicate). Raw media never leaves the device.</p></div>
-      <div class="card"><span class="num">2</span><h3>Attest</h3><p>A staked detection oracle runs Google SynthID + C2PA verification off-chain and signs a verdict into the canonical attestation.</p></div>
+      <div class="card"><span class="num">2</span><h3>Attest</h3><p>A staked oracle runs the signals (C2PA, open SynthID-Text, and more) off-chain and signs a <em>claim of record</em> — which detector saw what — not a bare “this is AI.”</p></div>
       <div class="card"><span class="num">3</span><h3>Record</h3><p>Written to the registry (Ethereum Attestation Service on an L2). The chain enforces <code class="inline">chash</code> dedup, staked-writer gating, and near-dup linkage.</p></div>
       <div class="card"><span class="num">4</span><h3>Read — free</h3><p>Integrators query by fingerprint and get back the verdict, confidence, model lineage, and challenge status. Reads cost nothing.</p></div>
       <div class="card"><span class="num">5</span><h3>Challenge</h3><p>Anyone can dispute a wrong attestation within a window. Resolution slashes the loser’s stake and revokes the attestation.</p></div>
