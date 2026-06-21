@@ -4,12 +4,17 @@
 
 ```
 site/
-├── index.html     # the landing page (inline CSS + ~20 lines of vanilla JS)
+├── index.html     # the landing page (inline CSS + vanilla JS; light/dark toggle + scroll reveal)
 ├── 404.html       # styled not-found page
 ├── favicon.svg    # logo / favicon
+├── og-image.svg   # social-preview source → CI rasterizes it to og-image.png (1200×630)
 ├── .nojekyll      # disable Jekyll processing
 └── README.md
 ```
+
+## Social preview (OG image)
+
+`og-image.svg` is the editable source. The Pages workflow ([`.github/workflows/pages.yml`](../.github/workflows/pages.yml)) **rasterizes it to `og-image.png`** with `rsvg-convert` at deploy time (SVG OG images aren't reliably supported by social scrapers; the PNG is). The page's `og:image` / `twitter:image` point at the deployed `og-image.png`. Edit the SVG; the PNG regenerates on the next deploy.
 
 ## Preview locally
 

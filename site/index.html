@@ -7,14 +7,18 @@
 <meta name="description" content="Juno is a neutral, economically-liable on-chain registry of record for AI-content provenance (built on SynthID + C2PA) — so anyone can tell real media from AI-generated, and no single company owns the answer. Pre-alpha, open source." />
 <meta name="theme-color" content="#0a0b12" />
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-<meta name="color-scheme" content="dark" />
+<meta name="color-scheme" content="dark light" />
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('juno-theme')==='light')d.classList.add('light');}catch(e){}})();</script>
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Juno Protocol — a neutral registry of record for AI-content provenance" />
 <meta property="og:description" content="Tell real media from AI — with a record you can point to. Open source, economically-liable, no single company owns it. Pre-alpha." />
 <meta property="og:url" content="https://starcomp.github.io/junoprotocol/" />
-<!-- TODO: add og:image (1200x630 PNG) before publishing -->
+<meta property="og:image" content="https://starcomp.github.io/junoprotocol/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://starcomp.github.io/junoprotocol/og-image.png" />
 <style>
   :root{
     --bg:#0a0b12; --bg-2:#0e1018; --elev:#13151f; --card:#14162100;
@@ -45,7 +49,7 @@
 
   /* nav */
   header.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);
-    background:rgba(10,11,18,.72);border-bottom:1px solid var(--border)}
+    background:var(--nav-bg);border-bottom:1px solid var(--border)}
   .nav-in{display:flex;align-items:center;gap:18px;height:62px}
   .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;color:var(--text)}
   .brand:hover{text-decoration:none}
@@ -101,7 +105,7 @@
   @media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
 
-  .card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+  .card{background:var(--card-grad);
     border:1px solid var(--border);border-radius:var(--radius);padding:22px}
   .card h3{margin-bottom:.35em}
   .card p{color:var(--muted);font-size:.96rem;margin:0}
@@ -121,7 +125,7 @@
     background:var(--accent-2);box-shadow:0 0 0 4px rgba(62,201,192,.14)}
   ul.clean li strong{color:var(--text);font-weight:650}
 
-  pre{background:#0c0e16;border:1px solid var(--border);border-radius:12px;padding:16px;overflow:auto;
+  pre{background:var(--code-bg);border:1px solid var(--border);border-radius:12px;padding:16px;overflow:auto;
     font-family:var(--mono);font-size:.82rem;line-height:1.6;color:#cfd3e6}
   pre .c{color:var(--accent-2)}
   pre .k{color:var(--accent)}
@@ -156,6 +160,88 @@
   .foot-col a{display:block;padding:4px 0}
   .disclaimer{border-top:1px solid var(--border);padding-top:22px;line-height:1.7;max-width:880px}
   .disclaimer em{color:var(--muted);font-style:normal}
+
+  /* ───────── theming surfaces (referenced above) + light theme ───────── */
+  :root{
+    --nav-bg:rgba(10,11,18,.72);
+    --card-grad:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+    --code-bg:#0c0e16; --panel:#13151f;
+  }
+  :root.light{
+    --bg:#f6f7fc; --bg-2:#eef1f8; --elev:#ffffff;
+    --text:#171a26; --muted:#4b5165; --faint:#828aa3;
+    --border:rgba(20,22,40,.10); --border-2:rgba(20,22,40,.17);
+    --accent:#6a5bff; --accent-2:#12968d;
+    --nav-bg:rgba(246,247,252,.82);
+    --card-grad:linear-gradient(180deg,#ffffff,#f3f5fb);
+    --panel:#ffffff;
+  }
+  :root.light code.inline{background:rgba(20,22,40,.06)}
+  :root.light .hero::before{opacity:.55}
+
+  /* theme toggle */
+  .theme-btn{background:none;border:1px solid var(--border-2);color:var(--text);border-radius:9px;
+    width:38px;height:38px;cursor:pointer;font-size:1rem;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .theme-btn:hover{border-color:var(--accent)}
+  .theme-btn .moon{display:none}.theme-btn .sun{display:inline}
+  :root.light .theme-btn .moon{display:inline}:root.light .theme-btn .sun{display:none}
+
+  /* audience router */
+  .router{display:flex;flex-wrap:wrap;gap:11px;justify-content:center;max-width:780px;margin:6px auto 0;padding:0 22px}
+  .router a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);
+    border-radius:11px;color:var(--muted);font-size:.92rem;font-weight:600;background:var(--card-grad)}
+  .router a:hover{color:var(--text);border-color:var(--accent);text-decoration:none;transform:translateY(-1px)}
+  .router a{transition:transform .15s ease,border-color .15s ease,color .15s ease}
+  .router b{color:var(--text)}
+
+  /* objection callout */
+  .objection{margin-top:26px;border-left:3px solid var(--accent);background:var(--card-grad);
+    border-radius:0 12px 12px 0;padding:16px 20px}
+  .objection h3{font-size:1.02rem;margin:0 0 .3em}
+  .objection p{color:var(--muted);font-size:.95rem;margin:0}
+
+  /* persistent-memory visual */
+  .pm-visual{max-width:940px;margin:6px auto 0}
+  .pm-visual svg{width:100%;height:auto;display:block}
+  .pm-visual .frame{fill:var(--panel);stroke:var(--border-2)}
+  .pm-visual text{fill:var(--muted);font-size:13px;font-family:var(--sans)}
+  .pm-visual .t-strong{fill:var(--text);font-weight:600}
+  .pm-visual .arrow{stroke:var(--faint);fill:none;stroke-width:2}
+  .pm-cap{text-align:center;color:var(--muted);font-size:.95rem;max-width:740px;margin:18px auto 0}
+  .pm-cap b{color:var(--text)}
+
+  /* claim-of-record before/after */
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}
+  @media(max-width:620px){.ba{grid-template-columns:1fr}}
+  .ba .col{border:1px solid var(--border);border-radius:14px;padding:20px;background:var(--card-grad)}
+  .ba .bad{border-color:rgba(245,90,90,.32)} .ba .good{border-color:rgba(70,211,154,.32)}
+  .ba .tag2{font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:11px;display:inline-block}
+  .ba .bad .tag2{color:#f56a6a} .ba .good .tag2{color:var(--good)}
+  .ba .q{font-family:var(--mono);font-size:.92rem;color:var(--text);line-height:1.5}
+  .ba p{color:var(--muted);font-size:.9rem;margin:.7em 0 0}
+
+  /* proof-of-work grid + status strip */
+  .proof{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:34px}
+  @media(max-width:760px){.proof{grid-template-columns:1fr}}
+  .proof-item{border:1px solid var(--border);border-radius:14px;padding:20px;background:var(--card-grad);display:flex;flex-direction:column;gap:7px}
+  .proof-item .ph-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .proof-item h3{font-size:1.02rem;margin:0}
+  .proof-item p{color:var(--muted);font-size:.92rem;margin:0;flex:1}
+  .proof-item a{font-size:.85rem;font-weight:600}
+  .badge{font-size:.68rem;font-weight:700;letter-spacing:.03em;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .badge.green{color:var(--good);background:rgba(70,211,154,.12);border:1px solid rgba(70,211,154,.3)}
+  .badge.amber{color:var(--warn);background:rgba(245,179,74,.1);border:1px solid rgba(245,179,74,.28)}
+  .status{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:20px;padding:16px 20px;border:1px solid var(--border);
+    border-radius:12px;background:var(--card-grad);font-size:.9rem}
+  .status .s{color:var(--muted)} .status .s b{color:var(--text)}
+  .status .shipped::before{content:"✓ ";color:var(--good);font-weight:800}
+  .status .planned::before{content:"○ ";color:var(--faint);font-weight:800}
+
+  /* scroll reveal (only when motion is welcome) */
+  @media (prefers-reduced-motion: no-preference){
+    .js .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+    .js .reveal.in{opacity:1;transform:none}
+  }
 </style>
 </head>
 <body>
@@ -175,6 +261,7 @@
       <a href="#roadmap">Roadmap</a>
       <a href="#build">Developers</a>
       <a class="nav-cta" href="https://github.com/starcomp/junoprotocol" target="_blank" rel="noopener">GitHub ↗</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle light or dark theme" title="Toggle theme"><span class="sun" aria-hidden="true">☀</span><span class="moon" aria-hidden="true">☾</span></button>
     </nav>
   </div>
 </header>
@@ -196,6 +283,14 @@
     <p class="micro"><strong>Not an AI detector.</strong> Reads are free. Vendor-neutral — C2PA + open SynthID-Text and more; no single provider is load-bearing. Not affiliated with Google.</p>
   </div>
 </section>
+
+<!-- AUDIENCE ROUTER -->
+<nav class="router reveal" aria-label="Quick links">
+  <a href="https://github.com/starcomp/junoprotocol/blob/main/docs/FAQ.md" target="_blank" rel="noopener">🔎&nbsp;<b>Verify</b> a claim</a>
+  <a href="https://github.com/starcomp/junoprotocol/tree/main/sdk" target="_blank" rel="noopener">🧩&nbsp;<b>Integrate</b></a>
+  <a href="https://github.com/starcomp/junoprotocol/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">⚙️&nbsp;<b>Contribute</b></a>
+  <a href="#different">📖&nbsp;<b>Understand</b></a>
+</nav>
 
 <!-- WHAT IT IS -->
 <section id="thesis">
@@ -227,6 +322,90 @@
       </div>
     </div>
     <p class="micro" style="margin-top:22px">Two of these four are genuinely chain-justified; two are conditional. <strong>We say so openly</strong> — that candor is the asset.</p>
+
+    <div class="objection reveal">
+      <h3>“Isn’t this just what Chrome and Search do for free?”</h3>
+      <p>For the consumer label — yes, and we don’t compete there. Juno is the part a vendor structurally <em>won’t</em> build: a neutral, cross-vendor, economically-liable record with persistent memory, sold to liability-bearing buyers. <a href="https://github.com/starcomp/junoprotocol/blob/main/docs/FAQ.md" target="_blank" rel="noopener">Read the full answer →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATORS -->
+<section id="different">
+  <div class="wrap">
+    <div class="eyebrow">Why it’s different</div>
+    <h2>It remembers after the watermark is gone</h2>
+    <p class="section-lead">A credential can be stripped and a file re-encoded in seconds. Keyed by a perceptual fingerprint, the registry still surfaces the prior attestation — a labeled, dated prior, never a fresh verdict.</p>
+    <div class="pm-visual reveal">
+      <svg viewBox="0 0 940 200" role="img" aria-label="A credentialed image has its watermark stripped and is recompressed, but the registry still surfaces the prior attestation by fingerprint.">
+        <defs>
+          <linearGradient id="pmThumb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a52a8"/><stop offset="1" stop-color="#2f7d78"/></linearGradient>
+          <linearGradient id="pmMark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b7bff"/><stop offset="1" stop-color="#3ec9c0"/></linearGradient>
+          <clipPath id="pmc1"><rect x="20" y="18" width="210" height="84" rx="8"/></clipPath>
+          <clipPath id="pmc2"><rect x="20" y="18" width="180" height="84" rx="8"/></clipPath>
+        </defs>
+        <!-- Panel 1: original -->
+        <g transform="translate(20,20)">
+          <rect class="frame" x="0" y="0" width="250" height="160" rx="14"/>
+          <g clip-path="url(#pmc1)">
+            <rect x="20" y="18" width="210" height="84" fill="url(#pmThumb)"/>
+            <circle cx="58" cy="44" r="13" fill="#ffd27a" opacity="0.9"/>
+            <path d="M20 102 L80 60 L130 92 L180 56 L230 102 Z" fill="#0a0b12" opacity="0.35"/>
+          </g>
+          <g transform="translate(20,112)"><rect width="118" height="24" rx="12" fill="#46d39a" fill-opacity="0.16" stroke="#46d39a" stroke-opacity="0.5"/><text x="12" y="16" fill="#46d39a" font-size="12">✓ Credential</text></g>
+          <text class="t-strong" x="20" y="150">Original</text>
+        </g>
+        <!-- arrow -->
+        <path class="arrow" d="M286 100 h40" stroke-linecap="round"/><path class="arrow" d="M322 94 l8 6 l-8 6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Panel 2: stripped -->
+        <g transform="translate(345,20)">
+          <rect class="frame" x="0" y="0" width="250" height="160" rx="14"/>
+          <g clip-path="url(#pmc2)">
+            <rect x="20" y="18" width="180" height="84" fill="url(#pmThumb)"/>
+            <circle cx="58" cy="44" r="13" fill="#ffd27a" opacity="0.9"/>
+            <path d="M20 102 L80 60 L130 92 L180 56 L200 102 Z" fill="#0a0b12" opacity="0.35"/>
+          </g>
+          <g transform="translate(20,112)"><rect width="100" height="24" rx="12" fill="#f56a6a" fill-opacity="0.14" stroke="#f56a6a" stroke-opacity="0.5"/><text x="12" y="16" fill="#f56a6a" font-size="12">✗ stripped</text></g>
+          <text x="132" y="128" font-size="11">recompressed · cropped</text>
+          <text class="t-strong" x="20" y="150">Credential gone</text>
+        </g>
+        <!-- arrow -->
+        <path class="arrow" d="M611 100 h40" stroke-linecap="round"/><path class="arrow" d="M647 94 l8 6 l-8 6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Panel 3: registry remembers -->
+        <g transform="translate(670,20)">
+          <rect class="frame" x="0" y="0" width="250" height="160" rx="14"/>
+          <g transform="translate(20,20)">
+            <rect width="34" height="34" rx="9" fill="url(#pmMark)"/>
+            <circle cx="17" cy="17" r="9" fill="none" stroke="#0a0b12" stroke-width="2.4"/>
+            <path d="M12.5 17.4 l3.2 3.2 L23 13" fill="none" stroke="#0a0b12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <text class="t-strong" x="46" y="14" font-size="13">Juno registry</text>
+            <text x="46" y="30" font-size="11">lookup by fingerprint</text>
+          </g>
+          <g transform="translate(20,74)">
+            <rect width="210" height="42" rx="9" fill="#8b7bff" fill-opacity="0.10" stroke="#8b7bff" stroke-opacity="0.42"/>
+            <text class="t-strong" x="14" y="19" font-size="12.5">⟲ previously attested AI</text>
+            <text x="14" y="34" font-size="11">claim of record · 2026-06-12</text>
+          </g>
+          <text class="t-strong" x="20" y="150">Registry remembers</text>
+        </g>
+      </svg>
+    </div>
+    <p class="pm-cap"><b>Only a neutral registry can do this.</b> Google’s label is per-asset and ephemeral; a C2PA manifest is trivially stripped. The on-chain prior, keyed by fingerprint, survives both.</p>
+
+    <h2 style="margin-top:58px">A claim of record — not a verdict</h2>
+    <p class="section-lead">Juno never asserts “this is AI.” It records a sourced, dated, <em>re-runnable</em> observation — which gives the slashing market deterministic ground truth and bounds defamation risk.</p>
+    <div class="ba reveal">
+      <div class="col bad">
+        <span class="tag2">✗ what we never say</span>
+        <div class="q">“This image is AI-generated.”</div>
+        <p>A present-tense factual verdict — unprovable on-chain, and defamatory if wrong about a real person.</p>
+      </div>
+      <div class="col good">
+        <span class="tag2">✓ what we record</span>
+        <div class="q">Attester A ran SynthID-Text v2 over this content on 2026-06-12 and observed a watermark.</div>
+        <p>A sourced, dated claim anyone can re-run and dispute. See <a href="https://github.com/starcomp/junoprotocol/blob/main/specs/JIP-4-trust-model.md" target="_blank" rel="noopener">JIP-4</a>.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -282,6 +461,35 @@
 <span class="k">uint8</span>   provenance</pre>
         <p class="micro" style="margin-top:10px">EAS ⇄ Borsh codecs verified byte-for-byte against <code class="inline">ethers</code>. <a href="https://github.com/starcomp/junoprotocol/tree/main/schema" target="_blank" rel="noopener">See schema/ ↗</a></p>
       </div>
+    </div>
+
+    <h2 style="margin-top:56px">What’s shipped</h2>
+    <p class="section-lead">Every claim here links to real, verifiable code in the repository — not a roadmap promise.</p>
+    <div class="proof reveal">
+      <div class="proof-item">
+        <div class="ph-top"><h3>Canonical schema (JIP-1)</h3><span class="badge green">round-trip 8/8</span></div>
+        <p>One source of truth → EAS schema string + Solidity tuple + Borsh struct, verified byte-for-byte against ethers.</p>
+        <a href="https://github.com/starcomp/junoprotocol/tree/main/schema" target="_blank" rel="noopener">schema/ ↗</a>
+      </div>
+      <div class="proof-item">
+        <div class="ph-top"><h3>S1 precision harness</h3><span class="badge green">runnable</span></div>
+        <p>Exact + recompression-invariant matching with ORB/RANSAC geometric verification, precision/recall eval, smoke-tested with zero installs.</p>
+        <a href="https://github.com/starcomp/junoprotocol/tree/main/fingerprinting" target="_blank" rel="noopener">fingerprinting/ ↗</a>
+      </div>
+      <div class="proof-item">
+        <div class="ph-top"><h3>On-chain contracts</h3><span class="badge amber">skeleton + tests</span></div>
+        <p>EAS resolver enforcing chash dedup + staked-writer gating, plus StakingManager with Foundry invariant tests.</p>
+        <a href="https://github.com/starcomp/junoprotocol/tree/main/contracts" target="_blank" rel="noopener">contracts/ ↗</a>
+      </div>
+      <div class="proof-item">
+        <div class="ph-top"><h3>Protocol specs</h3><span class="badge green">4 JIPs</span></div>
+        <p>Attestation schema, dual-fingerprint, audio/video, and the trust model (claim-of-record + multi-signal + graceful degradation).</p>
+        <a href="https://github.com/starcomp/junoprotocol/tree/main/specs" target="_blank" rel="noopener">specs/ ↗</a>
+      </div>
+    </div>
+    <div class="status reveal">
+      <span class="s shipped"><b>Shipped:</b> canonical schema · S1 harness · contract skeletons · 4 JIPs · this site</span>
+      <span class="s planned"><b>Planned:</b> testnet deploy (Base Sepolia) · published precision number · oracle node</span>
     </div>
   </div>
 </section>
@@ -392,6 +600,22 @@
       });
     }
     var yr=document.getElementById('yr'); if(yr){yr.textContent=new Date().getFullYear();}
+
+    // theme toggle (persisted)
+    var tb=document.getElementById('themeBtn');
+    if(tb){tb.addEventListener('click',function(){
+      var light=document.documentElement.classList.toggle('light');
+      try{localStorage.setItem('juno-theme',light?'light':'dark');}catch(e){}
+    });}
+
+    // scroll reveal (progressive enhancement)
+    var rev=document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window && rev.length){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      },{rootMargin:'0px 0px -8% 0px'});
+      rev.forEach(function(el){ io.observe(el); });
+    } else { rev.forEach(function(el){ el.classList.add('in'); }); }
   })();
 </script>
 </body>

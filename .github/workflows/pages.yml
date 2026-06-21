@@ -33,6 +33,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Rasterize OG image (SVG -> PNG for social-preview compatibility)
+        run: |
+          sudo apt-get update && sudo apt-get install -y librsvg2-bin
+          rsvg-convert -w 1200 -h 630 site/og-image.svg -o site/og-image.png
+          ls -la site/og-image.png
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
