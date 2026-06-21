@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Juno Protocol">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#7c6cff"/>
-      <stop offset="1" stop-color="#3ec9c0"/>
+      <stop offset="0" stop-color="#8b86ff"/>
+      <stop offset="1" stop-color="#5cd9c7"/>
     </linearGradient>
   </defs>
   <rect x="1" y="1" width="30" height="30" rx="8" fill="url(#g)"/>
-  <circle cx="16" cy="16" r="8.5" fill="none" stroke="#0a0b12" stroke-width="2.2" opacity="0.92"/>
-  <path d="M12 16.4 l2.9 2.9 L21 12" fill="none" stroke="#0a0b12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="16" cy="16" r="8.5" fill="none" stroke="#08090d" stroke-width="2.2" opacity="0.92"/>
+  <path d="M12 16.4 l2.9 2.9 L21 12" fill="none" stroke="#08090d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
