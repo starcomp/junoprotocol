@@ -251,6 +251,12 @@
     border-radius:10px;width:40px;height:40px;display:flex;align-items:center;justify-content:center}
   .gate h3{font-size:1.06rem;margin:0 0 .25em}
   .gate p{color:var(--ink-2);font-size:.95rem;margin:0}
+  .ghead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:.4em}
+  .ghead h3{margin:0}
+  .gstat{font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:6px;white-space:nowrap}
+  .gstat.ok{color:var(--ok);background:rgba(79,211,154,.1);border:1px solid rgba(79,211,154,.3)}
+  .gstat.open{color:var(--warn);background:rgba(239,177,82,.1);border:1px solid rgba(239,177,82,.3)}
+  .gstat.prog{color:var(--accent-ink);background:rgba(139,134,255,.1);border:1px solid rgba(139,134,255,.32)}
   .note{margin-top:24px;padding:18px 22px;border-radius:var(--radius);border:1px solid var(--line);
     background:var(--card);color:var(--ink-2);font-size:.94rem}
   .note b{color:var(--ink)}
@@ -319,7 +325,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="wrap">
-    <span class="status-pill"><span class="dot"></span> PRE-ALPHA · UNAUDITED · NO TOKEN</span>
+    <span class="status-pill"><span class="dot"></span> PRE-ALPHA · BUILT IN THE OPEN · NO TOKEN</span>
     <h1>Is it real, <span class="grad">or AI?</span></h1>
     <p class="lede">Juno is a neutral, economically-liable <strong style="color:var(--ink)">registry of record</strong> for AI-content provenance — so anyone can check whether media is AI-generated, and <em>no single company owns the answer.</em></p>
     <div class="cta-row">
@@ -525,15 +531,24 @@
   <div class="wrap">
     <div class="section-head">
       <span class="kicker">We lead with our weak points</span>
-      <h2>Three kill-gates</h2>
-      <p class="lede" style="margin-top:14px">Before any token or mainnet spend, three questions must be answered. If any fails, Juno pivots to a stablecoin consortium registry — or stops. This is in the roadmap, not buried.</p>
+      <h2>Three kill-gates — and where each stands</h2>
+      <p class="lede" style="margin-top:14px">Three questions gate any token or mainnet spend. We design to <em>de-risk</em> them, not assume them away — and where one can’t be cleared, Juno pivots to a stablecoin consortium registry, or stops. Here’s exactly where each stands today.</p>
     </div>
     <div class="gates">
-      <div class="gate reveal"><div class="gn">1</div><div><h3>Does Google’s API even permit this?</h3><p>The detection-API terms may forbid on-chain re-attestation, paid relay, or federation. A binary, potentially fatal, currently-unconfirmed legal question — diligence item #1.</p></div></div>
-      <div class="gate reveal"><div class="gn">2</div><div><h3>Will anyone actually pay?</h3><p>≥3 signed paid-pilot LOIs from liability-bearing buyers who can’t get the same data free from Google/C2PA — required <em>before</em> any token or mainnet spend.</p></div></div>
-      <div class="gate reveal"><div class="gn">3</div><div><h3>Is the matching precise enough?</h3><p>A published perceptual-hash precision number against a ≥1M hard-negative haystack. A false “AI” label is a defamation risk, so persistence ships only if precision clears.</p></div></div>
+      <div class="gate reveal"><div class="gn">1</div><div>
+        <div class="ghead"><h3>Does Google’s API even permit this?</h3><span class="gstat ok">de-risked by design</span></div>
+        <p>Their detection-API terms may forbid on-chain re-attestation, paid relay, or federation — still an open legal question. But we’ve made it <em>non-fatal</em>: Google’s detector is a flag-gated <em>option</em>, never load-bearing. The primary signals are ToS-clean (C2PA, open SynthID-Text, our own classifier), and a graceful-degradation invariant keeps the protocol running with Google off (<a href="https://github.com/starcomp/junoprotocol/blob/main/specs/JIP-4-trust-model.md" target="_blank" rel="noopener">JIP-4</a>). The open question is the upside, not survival.</p>
+      </div></div>
+      <div class="gate reveal"><div class="gn">2</div><div>
+        <div class="ghead"><h3>Will anyone actually pay?</h3><span class="gstat open">open · the real test</span></div>
+        <p>≥3 signed paid-pilot LOIs from liability-bearing buyers who can’t get the same data free from Google/C2PA — required <em>before</em> any token or mainnet spend. This is the gate we respect most: it decides whether the economics are real, not just the engineering.</p>
+      </div></div>
+      <div class="gate reveal"><div class="gn">3</div><div>
+        <div class="ghead"><h3>Is the matching precise enough?</h3><span class="gstat prog">harness shipped</span></div>
+        <p>A published perceptual-hash precision number against a ≥1M hard-negative haystack — a false “AI” label is a defamation risk, so persistence ships only if precision clears. The measurement harness is built, runnable, and tested (<a href="https://github.com/starcomp/junoprotocol/tree/main/fingerprinting" target="_blank" rel="noopener">fingerprinting/</a>); what remains is the published number on a real corpus.</p>
+      </div></div>
     </div>
-    <div class="note reveal"><b>The biggest systemic risk we name out loud:</b> correlated detector failure. Until a genuinely independent second licensed detector exists, “m-of-n” is just n copies of one Google API — and a unanimous-wrong federation is unslashable. That’s why real federation is gated, not assumed.</div>
+    <div class="note reveal"><b>The systemic risk we name out loud:</b> correlated detector failure. We’ve split it: <em>claim-of-record</em> gives the challenge market deterministic ground truth — it slashes a reproducible mismatch, never “wrong about reality” — and a continuous canary catches quiet drift. What stays genuinely unsolved, and therefore <em>gated</em>, is a second <em>independent</em> licensed detector for unlabeled media; until one exists, “m-of-n” is n copies of one Google API, so real federation is gated, not assumed.</div>
   </div>
 </section>
 
